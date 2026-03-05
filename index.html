@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <title>Data Science Practicals</title>
@@ -25,12 +24,10 @@ justify-content:space-between;
 align-items:center;
 position:sticky;
 top:0;
+z-index:999;
 }
 
-nav h2{
-color:#38bdf8;
-margin:0;
-}
+nav h2{color:#38bdf8;margin:0;}
 
 .dropdown{position:relative;}
 
@@ -39,9 +36,8 @@ background:#1e293b;
 color:white;
 border:none;
 padding:10px 18px;
-cursor:pointer;
 border-radius:6px;
-font-weight:600;
+cursor:pointer;
 }
 
 .dropdown-content{
@@ -55,20 +51,16 @@ border-radius:8px;
 .dropdown-content a{
 display:block;
 padding:10px;
-text-decoration:none;
 color:white;
+text-decoration:none;
 }
 
-.dropdown-content a:hover{
-background:#334155;
-}
+.dropdown-content a:hover{background:#334155;}
 
-.dropdown:hover .dropdown-content{
-display:block;
-}
+.dropdown:hover .dropdown-content{display:block;}
 
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
 padding:40px;
 }
@@ -80,25 +72,25 @@ border-radius:12px;
 margin-bottom:40px;
 }
 
-.card h2{
-color:#38bdf8;
+.cell{
+background:#020617;
+padding:20px;
+border-radius:10px;
+margin-top:15px;
 }
 
 .copy-btn{
 background:#38bdf8;
 border:none;
-padding:8px 16px;
+padding:6px 12px;
 border-radius:6px;
 cursor:pointer;
-font-weight:bold;
 margin-bottom:10px;
 }
 
 pre{
-background:#020617;
-padding:20px;
-border-radius:10px;
-overflow:auto;
+margin:0;
+overflow-x:auto;
 font-size:14px;
 }
 
@@ -127,16 +119,20 @@ font-size:14px;
 
 <div class="container">
 
+<!-- Practical 1 -->
+
 <div class="card" id="p1">
 
 <h2>Practical 1 – Excel Operations</h2>
 
-<button class="copy-btn" onclick="copyCode('code1')">Copy Formulas</button>
+<p><b>Aim:</b> Perform conditional formatting, create pivot tables, use VLOOKUP to retrieve values from another sheet and perform Goal Seek for what-if analysis.</p>
 
-<pre id="code1">
+<button class="copy-btn" onclick="copyCode('excel')">Copy</button>
 
+<div class="cell">
+<pre id="excel">
 Conditional Formatting
-Highlight Cells > Greater Than > 800
+Home → Conditional Formatting → Highlight Cells → Greater Than → 800
 
 Pivot Table
 Rows : Category
@@ -148,66 +144,105 @@ VLOOKUP
 Goal Seek
 Set Cell : Profit Cell
 To Value : 1000
-By Changing Cell : Sales Cell
-
-</pre>
+By Changing Cell : Sales Cell </pre>
 
 </div>
+
+</div>
+
+<!-- Practical 2 -->
 
 <div class="card" id="p2">
 
 <h2>Practical 2 – Data Preprocessing</h2>
 
-<button class="copy-btn" onclick="copyCode('code2')">Copy Code</button>
+<p><b>Aim:</b> Load CSV and JSON data, clean missing values, detect outliers and perform filtering, sorting and grouping operations.</p>
 
-<pre id="code2">
+<h3>Cell 1</h3>
+<button class="copy-btn" onclick="copyCode('p2c1')">Copy</button>
+
+<div class="cell">
+<pre id="p2c1">
 import pandas as pd
 
-csv_file_path='DATA SET.csv'
-df_csv=pd.read_csv(csv_file_path)
+csv_file_path = 'DATA SET.csv'
+df_csv = pd.read_csv(csv_file_path)
 
-json_file_path='ds.json'
-df_json=pd.read_json(json_file_path)
+json_file_path = 'ds.json'
+df_json = pd.read_json(json_file_path)
 
+print("CSV Data:")
 print(df_csv.head())
-print(df_json.head())
 
-df_csv_cleaned=df_csv.dropna()
-df_json_filled=df_json.fillna(0)
-
-median_value=df_csv['Sales'].median()
-
-upper=df_csv['Sales'].mean()+2*df_csv['Sales'].std()
-lower=df_csv['Sales'].mean()-2*df_csv['Sales'].std()
-
-df_csv['Sales']=df_csv['Sales'].apply(
-lambda x: median_value if x>upper or x<lower else x)
-
-filtered=df_csv[df_csv['Sales']>10]
-
-sorted_data=df_csv.sort_values(by='Sales',ascending=False)
-
-grouped=df_csv.groupby('Category')[['Sales','Cost','Profit']].mean()
-
-print(filtered.head())
-print(sorted_data.head())
-print(grouped.head())
-</pre>
+print("JSON Data:")
+print(df_json.head()) </pre>
 
 </div>
 
+<h3>Cell 2</h3>
+<button class="copy-btn" onclick="copyCode('p2c2')">Copy</button>
+
+<div class="cell">
+<pre id="p2c2">
+df_csv_cleaned = df_csv.dropna()
+df_json_filled = df_json.fillna(0)
+</pre>
+</div>
+
+<h3>Cell 3</h3>
+<button class="copy-btn" onclick="copyCode('p2c3')">Copy</button>
+
+<div class="cell">
+<pre id="p2c3">
+median_value = df_csv['Sales'].median()
+
+upper = df_csv['Sales'].mean() + 2 * df_csv['Sales'].std()
+lower = df_csv['Sales'].mean() - 2 * df_csv['Sales'].std()
+
+df_csv['Sales'] = df_csv['Sales'].apply(
+lambda x: median_value if x > upper or x < lower else x
+) </pre>
+
+</div>
+
+<h3>Cell 4</h3>
+<button class="copy-btn" onclick="copyCode('p2c4')">Copy</button>
+
+<div class="cell">
+<pre id="p2c4">
+filtered = df_csv[df_csv['Sales'] > 10]
+
+sorted_data = df_csv.sort_values(by='Sales', ascending=False)
+
+grouped = df_csv.groupby('Category')[['Sales','Cost','Profit']].mean()
+
+print(filtered.head())
+print(sorted_data.head())
+print(grouped.head()) </pre>
+
+</div>
+
+</div>
+
+<!-- Practical 3 -->
+
 <div class="card" id="p3">
 
-<h2>Practical 3 – Feature Scaling</h2>
+<h2>Practical 3 – Feature Scaling & Dummification</h2>
 
-<button class="copy-btn" onclick="copyCode('code3')">Copy Code</button>
+<p><b>Aim:</b> Apply feature scaling and convert categorical variables into numerical dummy variables.</p>
 
-<pre id="code3">
+<h3>Cell 1</h3>
+
+<button class="copy-btn" onclick="copyCode('p3c1')">Copy</button>
+
+<div class="cell">
+<pre id="p3c1">
 import pandas as pd
-from sklearn.preprocessing import StandardScaler,OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 
-data={
+data = {
 'Product':['Apple_Juice','Banana_Smoothie','Orange_Jam','Grape_Jelly','Kiwi_Parfait','Mango_Chutney','Pineapple_Sorbet','Strawberry_Yogurt','Blueberry_Pie','Cherry_Salsa'],
 'Category':['Apple','Banana','Orange','Grape','Kiwi','Mango','Pineapple','Strawberry','Blueberry','Cherry'],
 'Sales':[1200,1700,2200,1400,2000,1000,1500,1800,1300,1600],
@@ -215,67 +250,89 @@ data={
 'Profit':[600,850,1100,700,1000,500,750,900,650,800]
 }
 
-df=pd.DataFrame(data)
-
-scaler=StandardScaler()
-
-scaled=scaler.fit_transform(df[['Sales','Cost','Profit']])
-
-categorical=['Product','Category']
-
-preprocessor=ColumnTransformer(
-transformers=[('cat',OneHotEncoder(),categorical)],
-remainder='passthrough')
-
-df_dummified=preprocessor.fit_transform(df)
-
-print(df_dummified)
-</pre>
+df = pd.DataFrame(data) </pre>
 
 </div>
+
+<h3>Cell 2</h3>
+
+<button class="copy-btn" onclick="copyCode('p3c2')">Copy</button>
+
+<div class="cell">
+<pre id="p3c2">
+scaler = StandardScaler()
+
+scaled = scaler.fit_transform(df[['Sales','Cost','Profit']])
+
+categorical = ['Product','Category']
+
+preprocessor = ColumnTransformer(
+transformers=[('cat',OneHotEncoder(),categorical)],
+remainder='passthrough'
+)
+
+df_dummified = preprocessor.fit_transform(df)
+
+print(df_dummified) </pre>
+
+</div>
+
+</div>
+
+<!-- Practical 4 -->
 
 <div class="card" id="p4">
 
 <h2>Practical 4 – Hypothesis Testing</h2>
 
-<button class="copy-btn" onclick="copyCode('code4')">Copy Code</button>
+<p><b>Aim:</b> Perform hypothesis testing using two-sample t-test.</p>
 
-<pre id="code4">
+<button class="copy-btn" onclick="copyCode('p4code')">Copy</button>
+
+<div class="cell">
+<pre id="p4code">
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 
 np.random.seed(42)
 
-sample1=np.random.normal(10,2,30)
-sample2=np.random.normal(12,2,30)
+sample1 = np.random.normal(10,2,30)
+sample2 = np.random.normal(12,2,30)
 
-t,p=stats.ttest_ind(sample1,sample2)
+t,p = stats.ttest_ind(sample1,sample2)
 
-print(t,p)
+print("T-statistic:",t)
+print("P-value:",p)
 
 plt.hist(sample1,alpha=0.5)
 plt.hist(sample2,alpha=0.5)
 
-plt.show()
-</pre>
+plt.show() </pre>
 
 </div>
+
+</div>
+
+<!-- Practical 5 -->
 
 <div class="card" id="p5">
 
 <h2>Practical 5 – PCA</h2>
 
-<button class="copy-btn" onclick="copyCode('code5')">Copy Code</button>
+<p><b>Aim:</b> Reduce dimensionality using Principal Component Analysis.</p>
 
-<pre id="code5">
+<button class="copy-btn" onclick="copyCode('p5code')">Copy</button>
+
+<div class="cell">
+<pre id="p5code">
 data_iris <- iris[,1:4]
 
 cov_data <- cov(data_iris)
 
 eigen_data <- eigen(cov_data)
 
-pca_data <- princomp(data_iris,cor=FALSE)
+pca_data <- princomp(data_iris, cor=FALSE)
 
 summary(pca_data)
 
@@ -287,18 +344,24 @@ model2 <- pca_data$loadings[,1]
 
 model2_scores <- as.matrix(data_iris) %*% model2
 
-head(model2_scores)
-</pre>
+head(model2_scores) </pre>
 
 </div>
+
+</div>
+
+<!-- Practical 6 -->
 
 <div class="card" id="p6">
 
 <h2>Practical 6 – Decision Tree</h2>
 
-<button class="copy-btn" onclick="copyCode('code6')">Copy Code</button>
+<p><b>Aim:</b> Build a decision tree model using readingSkills dataset.</p>
 
-<pre id="code6">
+<button class="copy-btn" onclick="copyCode('p6code')">Copy</button>
+
+<div class="cell">
+<pre id="p6code">
 install.packages("party")
 
 library(party)
@@ -315,43 +378,58 @@ plot(tree)
 
 dev.off()
 
-plot(tree)
-</pre>
+plot(tree) </pre>
 
 </div>
+
+</div>
+
+<!-- Practical 7 -->
 
 <div class="card" id="p7">
 
 <h2>Practical 7 – ANOVA</h2>
 
-<button class="copy-btn" onclick="copyCode('code7')">Copy Code</button>
+<p><b>Aim:</b> Compare group means using ANOVA and Tukey test.</p>
 
-<pre id="code7">
+<button class="copy-btn" onclick="copyCode('p7code')">Copy</button>
+
+<div class="cell">
+<pre id="p7code">
 library(ggplot2)
 
 radon<-data.frame(
 D=c(0.37,0.37,0.37,0.37,
 0.51,0.51,0.51,0.51,
 0.71,0.71,0.71,0.71),
-RR=c(80,83,83,85,75,75,79,79,70,72,71,73)
+
+RR=c(80,83,83,85,
+75,75,79,79,
+70,72,71,73)
 )
 
 anova.rr<-aov(RR~as.factor(D),data=radon)
 
 summary(anova.rr)
 
-TukeyHSD(anova.rr)
-</pre>
+TukeyHSD(anova.rr) </pre>
 
 </div>
+
+</div>
+
+<!-- Practical 8 -->
 
 <div class="card" id="p8">
 
 <h2>Practical 8 – KMeans Clustering</h2>
 
-<button class="copy-btn" onclick="copyCode('code8')">Copy Code</button>
+<p><b>Aim:</b> Perform clustering using K-Means and determine optimal clusters.</p>
 
-<pre id="code8">
+<button class="copy-btn" onclick="copyCode('p8code')">Copy</button>
+
+<div class="cell">
+<pre id="p8code">
 data<-data.frame(
 Fresh=c(12669,7057,6353,13265,22615,12121,5421),
 Milk=c(9656,9810,8808,1196,5412,5254,5412)
@@ -361,7 +439,7 @@ data_scaled<-scale(data)
 
 wss<-numeric()
 
-for(i in 1:7){
+for(i in 1:6){
 
 model<-kmeans(data_scaled,centers=i,nstart=20)
 
@@ -369,8 +447,9 @@ wss[i]<-model$tot.withinss
 
 }
 
-plot(1:7,wss,type="b")
-</pre>
+plot(1:6,wss,type="b") </pre>
+
+</div>
 
 </div>
 
@@ -379,13 +458,9 @@ plot(1:7,wss,type="b")
 <script>
 
 function copyCode(id){
-
 let code=document.getElementById(id).innerText
-
 navigator.clipboard.writeText(code)
-
-alert("Code Copied!")
-
+alert("Code Copied")
 }
 
 </script>
